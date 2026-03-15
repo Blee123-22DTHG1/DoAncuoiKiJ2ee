@@ -1,8 +1,5 @@
 package bai4_qlsp_LeBinh.demo.config;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,18 +10,14 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import bai4_qlsp_LeBinh.demo.service.AccountService;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private AccountService accountService;
-
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance(); // không mã hóa mật khẩu
+        // Không mã hóa mật khẩu cho mục đích demo
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean
@@ -34,17 +27,33 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/products").hasAnyRole("USER","ADMIN")
-                .requestMatchers("/products/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-        )
-        .formLogin(form -> form
-                .defaultSuccessUrl("/products", true)
-                .permitAll()
-        )
-        .logout(logout -> logout.permitAll());
+        http
+                .authorizeHttpRequests(auth -> auth
+                        // Cho phép truy cập công khai các file tĩnh và trang chủ/login/register
+                        .requestMatchers("/", "/login", "/register", "/css/**", "/images/**", "/js/**").permitAll()
+
+                        // Phân quyền dựa trên cấu trúc thư mục (image_c81e9a.png)
+                        .requestMatchers("/product/**").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+
+                        .anyRequest().authenticated()
+                )
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        // Cấu hình logout bằng chuỗi String trực tiếp
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
+                // Tắt CSRF để tránh lỗi khi gửi form POST logout hoặc login
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
-    }   
+    }
 }

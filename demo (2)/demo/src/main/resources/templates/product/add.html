@@ -1,43 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{_layout :: content-wrapper(~{::content})}">
 <head>
-    <title>Thêm sản phẩm mới</title>
+    <title>Thêm sản phẩm mới - DOMORA</title>
+    <link rel="stylesheet" th:href="@{/static/css/product.css}">
 </head>
 <body>
-    <div layout:fragment="content" class="container mt-4">
-        <h2>Thêm sản phẩm</h2>
-        
-        <form th:action="@{/products/save}" th:object="${product}" method="post" class="form">
-            <input type="hidden" th:field="*{id}" />
-            
-            <div class="form-group">
-                <label for="name">Tên sản phẩm:</label>
-                <input type="text" th:field="*{name}" class="form-control" placeholder="Nhập tên sản phẩm" required>
+
+<div th:fragment="content" class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg p-4" style="border-radius: 20px;">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold" style="font-family: 'Playfair Display', serif; color: #2d2a26;">Thêm Sản Phẩm</h2>
+                    <p class="text-muted">Nhập thông tin để quản lý kho hàng của bạn.</p>
+                    <div class="mx-auto" style="width: 50px; height: 2px; background: #c6a482;"></div>
+                </div>
+
+                <form th:action="@{/products/add}" th:object="${product}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Tên sản phẩm</label>
+                        <input type="text" th:field="*{name}" class="form-control rounded-3 py-2" placeholder="Ví dụ: Sofa da cao cấp" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Link hình ảnh</label>
+                        <input type="text" th:field="*{image}" class="form-control rounded-3 py-2" placeholder="/images/sofa.jpg">
+                        <small class="text-muted">Gợi ý: Dùng đường dẫn trong thư mục images.</small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Giá bán (VNĐ)</label>
+                            <input type="number" th:field="*{price}" class="form-control rounded-3 py-2" step="1000" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Danh mục</label>
+                            <select th:field="*{category.id}" class="form-select rounded-3 py-2">
+                                <option th:each="cat : ${categories}"
+                                        th:value="${cat.id}"
+                                        th:text="${cat.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a th:href="@{/products}" class="btn btn-light rounded-pill px-4 border">HỦY BỎ</a>
+                        <button type="submit" class="btn btn-dark rounded-pill px-4" style="background: #5d4037; border: none;">
+                            LƯU SẢN PHẨM
+                        </button>
+                    </div>
+                </form>
             </div>
-            
-            <div class="form-group">
-                <label for="image">Link hình ảnh:</label>
-                <input type="text" th:field="*{image}" class="form-control" placeholder="http://image.jpg">
-            </div>
-            
-            <div class="form-group">
-                <label for="price">Giá:</label>
-                <input type="number" th:field="*{price}" class="form-control" placeholder="Nhập giá" step="0.01" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="category">Danh mục:</label>
-                <select th:field="*{category.id}" class="form-control">
-                    <option th:each="category : ${categories}" 
-                            th:value="${category.id}" 
-                            th:text="${category.name}">
-                    </option>
-                </select>
-            </div>
-            
-            <button type="submit" class="btn btn-success mt-3">Lưu sản phẩm</button>
-            <a href="/products" class="btn btn-secondary mt-3">Quay lại</a>
-        </form>
+        </div>
     </div>
+</div>
+
 </body>
 </html>
