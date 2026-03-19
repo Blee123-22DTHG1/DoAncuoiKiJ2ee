@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{_layout :: layout(~{::pageHead}, ~{::content})}">
+
+<head>
+    <th:block th:fragment="pageHead">
+        <title>Sản phẩm - DOMORA</title>
+        <link rel="stylesheet" th:href="@{/css/product.css}">
+    </th:block>
+</head>
+
+<body>
+<div th:fragment="content">
+
+    <div class="text-center mb-5">
+        <h1 class="section-title fw-bold">Sản Phẩm Cao Cấp</h1>
+        <div class="mx-auto" style="width:60px;height:3px;background:#c6a482;"></div>
+    </div>
+
+    <div class="row g-4" th:if="${not #lists.isEmpty(products)}">
+        <div class="col-md-4 col-lg-3" th:each="product : ${products}">
+            <div class="card h-100 shadow-sm border-0">
+
+                <div style="height:250px;overflow:hidden;">
+                    <img th:src="@{/images/{img}(img=${product.image})}"
+                         class="w-100 h-100"
+                         style="object-fit:cover">
+                </div>
+
+                <div class="card-body text-center">
+                    <h6 class="fw-bold" th:text="${product.name}"></h6>
+
+                    <p class="text-muted small"
+                       th:text="${product.category != null ? product.category.name : 'Chưa phân loại'}">
+                    </p>
+
+                    <p class="fw-bold" style="color:#c6a482"
+                       th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT') + ' đ'}">
+                    </p>
+
+                    <div class="d-flex gap-2">
+                        <a th:href="@{/products/edit/{id}(id=${product.id})}"
+                           class="btn btn-outline-primary btn-sm w-50">
+                            Sửa
+                        </a>
+
+                        <a th:href="@{/products/delete/{id}(id=${product.id})}"
+                           class="btn btn-outline-danger btn-sm w-50"
+                           onclick="return confirm('Xác nhận xóa?')">
+                            Xóa
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center py-5" th:if="${#lists.isEmpty(products)}">
+        <div class="alert alert-warning d-inline-block">
+            <i class="bi bi-exclamation-triangle"></i>
+            Chưa có sản phẩm nào
+        </div>
+
+        <br>
+
+        <a th:href="@{/products/add}" class="btn btn-dark mt-3">
+            Thêm sản phẩm
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

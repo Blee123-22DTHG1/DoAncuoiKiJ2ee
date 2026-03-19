@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản | DOMORA Luxury</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/user/auth.css}">
+</head>
+<body class="auth-page">
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-image auth-image-register"></div>
+
+        <div class="auth-form-section">
+            <a th:href="@{/}" class="brand-logo">
+                DOMORA<span class="brand-dot">.</span>
+            </a>
+
+            <h2 class="auth-title">Tạo tài khoản mới</h2>
+            <p class="auth-subtitle">Tham gia cùng cộng đồng yêu nội thất hiện đại.</p>
+
+            <div th:if="${error}" class="alert alert-danger py-2 mb-4 auth-alert" th:text="${error}"></div>
+            <div th:if="${success}" class="alert alert-success py-2 mb-4 auth-alert" th:text="${success}"></div>
+
+            <form th:action="@{/register}" method="post">
+                <div class="mb-3 text-start">
+                    <label class="form-label auth-label">Tên đăng nhập</label>
+                    <input type="text" name="username" class="form-control auth-input"
+                           placeholder="Ví dụ: binhle123" required>
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="form-label auth-label">Mật khẩu</label>
+                    <input type="password" name="password" class="form-control auth-input"
+                           placeholder="••••••••" required>
+                </div>
+
+                <div class="mb-4 text-start">
+                    <label class="form-label auth-label">Xác nhận mật khẩu</label>
+                    <input type="password" name="confirmPassword" class="form-control auth-input"
+                           placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn auth-btn w-100 shadow-sm">ĐĂNG KÝ TÀI KHOẢN</button>
+
+                <p class="text-center mt-4 text-muted small mb-0">
+                    Đã có tài khoản?
+                    <a th:href="@{/login}" class="auth-link-strong">Đăng nhập tại đây</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

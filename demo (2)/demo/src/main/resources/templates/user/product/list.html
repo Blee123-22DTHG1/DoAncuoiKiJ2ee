@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/user-layout :: layout(~{::pageHead}, ~{::content})}">
+
+<head>
+    <th:block th:fragment="pageHead">
+        <title th:text="${pageTitle != null ? pageTitle + ' - DOMORA' : 'Sản phẩm - DOMORA'}">Sản phẩm - DOMORA</title>
+        <link rel="stylesheet" th:href="@{/css/user/product-list.css}">
+    </th:block>
+</head>
+
+<body>
+<div th:fragment="content">
+
+    <section class="product-hero"
+             th:style="${bannerImage != null and !#strings.isEmpty(bannerImage)} ? |background-image: url('/images/banners/${bannerImage}');| : ''">
+        <div class="product-hero-overlay"></div>
+        <div class="container product-hero-content">
+            <p class="product-hero-subtitle">Luxury Collection</p>
+            <h1 class="product-hero-title"
+                th:text="${pageTitle != null ? pageTitle : 'Tất Cả Sản Phẩm'}">
+                Nội Thất Phòng Khách
+            </h1>
+            <p class="product-hero-desc">
+                Trải nghiệm nội thất cao cấp cho không gian sống hiện đại và tinh tế.
+            </p>
+        </div>
+    </section>
+
+    <section class="product-page-section">
+        <div class="container">
+
+            <div class="product-page-header">
+                <h2 class="collection-title"
+                    th:text="${pageTitle != null ? pageTitle : 'Tất cả sản phẩm'}">
+                    Tất Cả Sản Phẩm
+                </h2>
+
+                <div class="sort-box">
+                    <form th:action="@{/products}" method="get">
+                        <input type="hidden" name="groupId" th:value="${selectedGroupId}">
+
+                        <th:block th:if="${selectedCategoryIds != null}">
+                            <input type="hidden" name="categoryIds"
+                                   th:each="id : ${selectedCategoryIds}"
+                                   th:value="${id}">
+                        </th:block>
+
+                        <th:block th:if="${selectedPrices != null}">
+                            <input type="hidden" name="prices"
+                                   th:each="p : ${selectedPrices}"
+                                   th:value="${p}">
+                        </th:block>
+
+                        <th:block th:if="${selectedColors != null}">
+                            <input type="hidden" name="colors"
+                                   th:each="c : ${selectedColors}"
+                                   th:value="${c}">
+                        </th:block>
+
+                        <th:block th:if="${selectedSizes != null}">
+                            <input type="hidden" name="sizes"
+                                   th:each="s : ${selectedSizes}"
+                                   th:value="${s}">
+                        </th:block>
+
+                        <select name="sort" class="form-select domora-select" onchange="this.form.submit()">
+                            <option value="">Sắp xếp</option>
+                            <option value="priceAsc" th:selected="${selectedSort == 'priceAsc'}">Giá tăng dần</option>
+                            <option value="priceDesc" th:selected="${selectedSort == 'priceDesc'}">Giá giảm dần</option>
+                            <option value="newest" th:selected="${selectedSort == 'newest'}">Mới nhất</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <div class="filter-label-wrap">
+                    <span class="filter-icon">
+                        <i class="bi bi-funnel"></i>
+                    </span>
+                    <span class="filter-label">Bộ lọc</span>
+                </div>
+
+                <form th:action="@{/products}" method="get" class="filter-form">
+                    <input type="hidden" name="groupId" th:value="${selectedGroupId}">
+
+                    <div class="filter-dropdown">
+                        <button type="button" class="filter-toggle">Danh mục</button>
+                        <div class="filter-dropdown-menu">
+                            <label class="filter-check-item" th:each="c : ${categories}">
+                                <input type="checkbox"
+                                       name="categoryIds"
+                                       th:value="${c.id}"
+                                       th:checked="${selectedCategoryIds != null and #lists.contains(selectedCategoryIds, c.id)}"
+                                       onchange="this.form.submit()">
+                                <span th:text="${c.name}">Ghế Sofa</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button type="button" class="filter-toggle">Giá sản phẩm</button>
+                        <div class="filter-dropdown-menu">
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="prices"
+                                       value="under5"
+                                       th:checked="${selectedPrices != null and #lists.contains(selectedPrices, 'under5')}">
+                                <span>Dưới 5 triệu</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="prices"
+                                       value="5to10"
+                                       th:checked="${selectedPrices != null and #lists.contains(selectedPrices, '5to10')}">
+                                <span>5 - 10 triệu</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="prices"
+                                       value="10to20"
+                                       th:checked="${selectedPrices != null and #lists.contains(selectedPrices, '10to20')}">
+                                <span>10 - 20 triệu</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="prices"
+                                       value="over20"
+                                       th:checked="${selectedPrices != null and #lists.contains(selectedPrices, 'over20')}">
+                                <span>Trên 20 triệu</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button type="button" class="filter-toggle">Màu sắc</button>
+                        <div class="filter-dropdown-menu">
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="colors"
+                                       value="brown"
+                                       th:checked="${selectedColors != null and #lists.contains(selectedColors, 'brown')}">
+                                <span>Nâu gỗ</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="colors"
+                                       value="white"
+                                       th:checked="${selectedColors != null and #lists.contains(selectedColors, 'white')}">
+                                <span>Trắng</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="colors"
+                                       value="black"
+                                       th:checked="${selectedColors != null and #lists.contains(selectedColors, 'black')}">
+                                <span>Đen</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="colors"
+                                       value="beige"
+                                       th:checked="${selectedColors != null and #lists.contains(selectedColors, 'beige')}">
+                                <span>Be</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="colors"
+                                       value="gray"
+                                       th:checked="${selectedColors != null and #lists.contains(selectedColors, 'gray')}">
+                                <span>Xám</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="filter-dropdown">
+                        <button type="button" class="filter-toggle">Kích thước</button>
+                        <div class="filter-dropdown-menu">
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="sizes"
+                                       value="small"
+                                       th:checked="${selectedSizes != null and #lists.contains(selectedSizes, 'small')}">
+                                <span>Nhỏ</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="sizes"
+                                       value="medium"
+                                       th:checked="${selectedSizes != null and #lists.contains(selectedSizes, 'medium')}">
+                                <span>Vừa</span>
+                            </label>
+
+                            <label class="filter-check-item">
+                                <input type="checkbox"
+                                       name="sizes"
+                                       value="large"
+                                       th:checked="${selectedSizes != null and #lists.contains(selectedSizes, 'large')}">
+                                <span>Lớn</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="filter-actions"
+                         th:if="${(selectedCategoryIds != null and !#lists.isEmpty(selectedCategoryIds))
+                              or (selectedPrices != null and !#lists.isEmpty(selectedPrices))
+                              or (selectedColors != null and !#lists.isEmpty(selectedColors))
+                              or (selectedSizes != null and !#lists.isEmpty(selectedSizes))
+                              or (selectedSort != null and !#strings.isEmpty(selectedSort))}">
+                        <a th:href="@{/products(groupId=${selectedGroupId})}" class="btn btn-domora-outline">Xóa lọc</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="active-filters"
+                 th:if="${(selectedCategoryNames != null and !#lists.isEmpty(selectedCategoryNames))
+                      or (selectedPrices != null and !#lists.isEmpty(selectedPrices))
+                      or (selectedColors != null and !#lists.isEmpty(selectedColors))
+                      or (selectedSizes != null and !#lists.isEmpty(selectedSizes))}">
+
+                <span class="active-filter-chip"
+                      th:each="name : ${selectedCategoryNames}">
+                    <span th:text="'DANH MỤC: ' + ${name}">DANH MỤC: Ghế Sofa</span>
+                </span>
+
+                <span class="active-filter-chip"
+                      th:each="price : ${selectedPrices}">
+                    <span th:switch="${price}">
+                        <span th:case="'under5'">GIÁ: Dưới 5 triệu</span>
+                        <span th:case="'5to10'">GIÁ: 5 - 10 triệu</span>
+                        <span th:case="'10to20'">GIÁ: 10 - 20 triệu</span>
+                        <span th:case="'over20'">GIÁ: Trên 20 triệu</span>
+                        <span th:case="*"
+                              th:text="'GIÁ: ' + ${price}">GIÁ</span>
+                    </span>
+                </span>
+
+                <span class="active-filter-chip"
+                      th:each="color : ${selectedColors}">
+                    <span th:switch="${color}">
+                        <span th:case="'brown'">MÀU: Nâu gỗ</span>
+                        <span th:case="'white'">MÀU: Trắng</span>
+                        <span th:case="'black'">MÀU: Đen</span>
+                        <span th:case="'beige'">MÀU: Be</span>
+                        <span th:case="'gray'">MÀU: Xám</span>
+                        <span th:case="*"
+                              th:text="'MÀU: ' + ${color}">MÀU</span>
+                    </span>
+                </span>
+
+                <span class="active-filter-chip"
+                      th:each="size : ${selectedSizes}">
+                    <span th:switch="${size}">
+                        <span th:case="'small'">KÍCH THƯỚC: Nhỏ</span>
+                        <span th:case="'medium'">KÍCH THƯỚC: Vừa</span>
+                        <span th:case="'large'">KÍCH THƯỚC: Lớn</span>
+                        <span th:case="*"
+                              th:text="'KÍCH THƯỚC: ' + ${size}">KÍCH THƯỚC</span>
+                    </span>
+                </span>
+            </div>
+
+            <div class="row g-4" th:if="${products != null and !#lists.isEmpty(products)}">
+                <div class="col-6 col-md-4 col-lg-3" th:each="product : ${products}">
+                    <div class="product-card">
+                        <div class="product-card-image-wrap">
+<!--                            <span class="discount-badge" th:if="${product.discountPercent != null}">-->
+<!--                                <span th:text="'-' + ${product.discountPercent} + '%'">-10%</span>-->
+<!--                            </span>-->
+
+                            <a th:href="@{/products/{id}(id=${product.id})}">
+                                <img th:src="@{/images/{img}(img=${product.image})}"
+                                     th:alt="${product.name}"
+                                     class="product-card-image">
+                            </a>
+                        </div>
+
+                        <div class="product-card-body">
+                            <p class="product-category"
+                               th:text="${product.category != null ? product.category.name : 'Nội thất'}">
+                                Nội thất
+                            </p>
+
+                            <h3 class="product-name">
+                                <a th:href="@{/products/{id}(id=${product.id})}"
+                                   th:text="${product.name}">
+                                    Tủ quần áo ASTRO
+                                </a>
+                            </h3>
+
+                            <div class="product-price-box">
+                                <span class="product-price"
+                                      th:text="${#numbers.formatDecimal(product.price,0,'COMMA',0,'POINT') + ' đ'}">
+                                    12,500,000 đ
+                                </span>
+                            </div>
+
+                            <div class="product-card-actions">
+                                <a th:href="@{/products/{id}(id=${product.id})}"
+                                   class="btn btn-domora-outline btn-sm w-100">
+                                    Xem chi tiết
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="empty-product-box text-center" th:if="${products == null or #lists.isEmpty(products)}">
+                <h4>Chưa có sản phẩm phù hợp</h4>
+                <p>Hãy thử thay đổi bộ lọc để xem thêm sản phẩm.</p>
+                <a th:href="@{/products}" class="btn btn-domora">Xem tất cả sản phẩm</a>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        document.querySelectorAll('.filter-toggle').forEach(button => {
+            button.addEventListener('click', function () {
+                const parent = this.closest('.filter-dropdown');
+
+                document.querySelectorAll('.filter-dropdown').forEach(item => {
+                    if (item !== parent) {
+                        item.classList.remove('open');
+                    }
+                });
+
+                parent.classList.toggle('open');
+            });
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.filter-dropdown')) {
+                document.querySelectorAll('.filter-dropdown').forEach(item => {
+                    item.classList.remove('open');
+                });
+            }
+        });
+    </script>
+
+</div>
+</body>
+</html>

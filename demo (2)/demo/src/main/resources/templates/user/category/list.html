@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh mục</title>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<section class="container mt-4">
+    <h2 th:if="${selectedGroup == null}">Tất cả danh mục con</h2>
+    <h2 th:if="${selectedGroup != null}">
+        Danh mục thuộc nhóm: <span th:text="${selectedGroup.name}"></span>
+    </h2>
+
+    <div class="mb-4">
+        <h4>Nhóm danh mục</h4>
+        <ul>
+            <li>
+                <a th:href="@{/categories}">Tất cả</a>
+            </li>
+            <li th:each="group : ${groups}">
+                <a th:href="@{/categories/group/{id}(id=${group.id})}"
+                   th:text="${group.name}">
+                    Tên nhóm
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <h4>Danh mục con</h4>
+        <ul th:if="${categories != null and !#lists.isEmpty(categories)}">
+            <li th:each="cate : ${categories}">
+                <span th:text="${cate.name}">Tên danh mục</span>
+            </li>
+        </ul>
+
+        <p th:if="${categories == null or #lists.isEmpty(categories)}">
+            Không có danh mục con nào.
+        </p>
+    </div>
+</section>
+
+</body>
+</html>

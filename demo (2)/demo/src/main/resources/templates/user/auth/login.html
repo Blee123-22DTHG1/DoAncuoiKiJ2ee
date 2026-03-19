@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập | DOMORA Luxury</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/user/auth.css}">
+</head>
+<body class="auth-page">
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-image auth-image-login"></div>
+
+        <div class="auth-form-section text-center text-md-start">
+            <a th:href="@{/}" class="brand-logo">
+                DOMORA<span class="brand-dot">.</span>
+            </a>
+
+            <h2 class="auth-title">Chào mừng trở lại</h2>
+            <p class="auth-subtitle">Vui lòng đăng nhập để quản lý không gian của bạn.</p>
+
+            <div th:if="${param.error}" class="alert alert-danger py-2 mb-4 auth-alert">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                Tên đăng nhập hoặc mật khẩu không chính xác.
+            </div>
+
+            <div th:if="${param.logout}" class="alert alert-success py-2 mb-4 auth-alert">
+                <i class="bi bi-check-circle-fill"></i>
+                Bạn đã đăng xuất thành công.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="mb-3">
+                    <label class="form-label auth-label">Tài khoản</label>
+                    <input type="text" name="username" class="form-control auth-input"
+                           placeholder="Nhập username" required autofocus>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label auth-label">Mật khẩu</label>
+                    <input type="password" name="password" class="form-control auth-input"
+                           placeholder="••••••••" required>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4 auth-options">
+                    <div class="form-check text-start">
+                        <input class="form-check-input" type="checkbox" id="rememberMe" name="remember-me">
+                        <label class="form-check-label small" for="rememberMe">Ghi nhớ tôi</label>
+                    </div>
+                    <a href="#" class="auth-link-small">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="btn auth-btn w-100">ĐĂNG NHẬP NGAY</button>
+
+                <p class="text-center mt-4 text-muted small mb-0">
+                    Chưa có tài khoản?
+                    <a th:href="@{/register}" class="auth-link-strong">Đăng ký ngay</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

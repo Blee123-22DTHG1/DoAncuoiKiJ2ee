@@ -1,0 +1,111 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.brand-font {
+    font-family: 'Playfair Display', serif;
+}
+
+a {
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+main {
+    min-height: 60vh;
+}
+
+.section-padding {
+    padding: 80px 0;
+}
+
+.section-heading {
+    margin-bottom: 48px;
+    text-align: center;
+}
+
+.section-heading .subtitle {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    color: var(--accent-color);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.section-heading .title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 12px;
+    color: var(--primary-color);
+}
+
+.section-heading .divider {
+    width: 80px;
+    height: 3px;
+    background: var(--accent-color);
+    margin: 0 auto 16px;
+}
+
+.section-heading .desc {
+    color: var(--muted-color);
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.btn-domora {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: 1px solid var(--accent-color);
+    padding: 12px 28px;
+    border-radius: 0;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.btn-domora:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.btn-domora-outline {
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 12px 28px;
+    border-radius: 0;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.btn-domora-outline:hover {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.card-domora {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.card-domora:hover {
+    transform: translateY(-6px);
+}

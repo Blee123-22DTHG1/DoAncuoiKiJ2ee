@@ -15,8 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        // Không mã hóa mật khẩu cho mục đích demo
+    public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 
@@ -29,13 +28,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        // Cho phép truy cập công khai các file tĩnh và trang chủ/login/register
-                        .requestMatchers("/", "/login", "/register", "/css/**", "/images/**", "/js/**").permitAll()
-
-                        // Phân quyền dựa trên cấu trúc thư mục (image_c81e9a.png)
-                        .requestMatchers("/product/**").hasAnyAuthority("USER", "ADMIN")
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
-
+                        .requestMatchers(
+                                "/", "/login", "/register",
+                                "/products/**", "/categories/**",
+                                "/css/**", "/images/**", "/js/**"
+                        ).permitAll()
+                        .requestMatchers("/cart/**", "/checkout/**", "/account/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -44,14 +43,12 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        // Cấu hình logout bằng chuỗi String trực tiếp
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 )
-                // Tắt CSRF để tránh lỗi khi gửi form POST logout hoặc login
                 .csrf(csrf -> csrf.disable());
 
         return http.build();

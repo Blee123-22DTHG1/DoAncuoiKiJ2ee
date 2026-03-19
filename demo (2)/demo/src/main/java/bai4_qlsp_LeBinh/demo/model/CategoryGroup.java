@@ -6,21 +6,20 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "category_group")
+public class CategoryGroup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Tên danh mục không được để trống")
+    @NotBlank(message = "Tên nhóm danh mục không được để trống")
     @Column(nullable = false, length = 255)
     private String name;
 
     @Column(length = 255, unique = true)
     private String slug;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id", nullable = false)
-    private CategoryGroup group;
+    @Column(length = 255)
+    private String bannerImage;
 }

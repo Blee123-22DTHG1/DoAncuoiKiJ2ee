@@ -1,0 +1,13 @@
+:root {
+    --primary-color: #5d4037;
+    --primary-dark: #3e2723;
+    --accent-color: #c6a482;
+    --accent-light: #e8d8c7;
+    --text-color: #2f2f2f;
+    --muted-color: #7a7a7a;
+    --bg-light: #f8f5f1;
+    --bg-section: #f9f7f2;
+    --border-color: #e9dfd3;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
