@@ -1,0 +1,45 @@
+<div th:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-6">
+            <div class="card border-0 shadow-lg rounded-4 p-4">
+                <div class="text-center mb-4">
+                    <div class="icon-box bg-primary-subtle text-primary rounded-circle mx-auto mb-3">
+                        <i class="fa-solid fa-layer-group fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold" th:text="${category.id == null ? 'Thêm danh mục mới' : 'Cập nhật danh mục'}"></h5>
+                </div>
+
+                <form th:action="@{/admin/category/save}" th:object="${category}" method="post">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-floating mb-3">
+                        <select th:field="*{group.id}" class="form-select border-0 bg-light shadow-none" required>
+                            <option value="">-- Chọn nhóm --</option>
+                            <option th:each="g : ${groups}" th:value="${g.id}" th:text="${g.name}"></option>
+                        </select>
+                        <label class="fw-bold small text-uppercase">Thuộc nhóm danh mục</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" th:field="*{name}" class="form-control border-0 bg-light shadow-none" 
+                               id="catName" placeholder="Tên danh mục" required>
+                        <label class="fw-bold small text-uppercase text-muted">Tên danh mục</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" th:field="*{slug}" class="form-control border-0 bg-light shadow-none" 
+                               id="catSlug" placeholder="Slug">
+                        <label class="fw-bold small text-uppercase text-muted">Slug (URL động)</label>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3">
+                        <a th:href="@{/admin/category}" class="btn btn-light px-4 fw-bold">Hủy bỏ</a>
+                        <button type="submit" class="btn btn-primary px-5 fw-bold shadow">
+                            <i class="fa-solid fa-check-circle me-2"></i> Lưu dữ liệu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

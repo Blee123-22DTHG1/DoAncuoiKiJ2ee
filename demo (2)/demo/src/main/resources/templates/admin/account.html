@@ -1,0 +1,33 @@
+<div>
+    <h4 class="mt-4">Accounts</h4>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Roles</th>
+            <th>Hoạt động</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="acc : ${accounts}">
+            <td th:text="${acc.id}"></td>
+            <td th:text="${acc.loginName}"></td>
+            <td>
+                <span th:each="r : ${acc.roles}" th:text="${r.name} + ' '"></span>
+            </td>
+            <td>
+                <a th:href="@{/admin/accounts/delete(id=${acc.id})}" 
+                class="btn btn-danger btn-sm">
+                    Xóa
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${accounts == null or #lists.isEmpty(accounts)}">
+        <p class="text-danger">Không thấy tài khoản</p>
+    </div>
+</div>

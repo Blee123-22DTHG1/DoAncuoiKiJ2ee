@@ -1,0 +1,233 @@
+/* src/main/resources/static/css/admin-style.css */
+:root {
+    --sidebar-width: 260px;
+    --sidebar-collapsed-width: 70px; /* Chiều rộng khi thu nhỏ */
+    --primary-color: #4f46e5;
+    --bg-body: #f8fafc;
+    --sidebar-bg: #1e293b;
+    --transition-speed: 0.3s;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    color: #1e293b;
+    margin: 0;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--sidebar-bg);
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Cho phép cuộn dọc menu */
+    overflow-x: hidden;
+}
+
+/* Custom thanh cuộn cho Sidebar */
+.sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* Trạng thái thu nhỏ (Collapsed) */
+.sidebar.collapsed {
+    width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .sidebar-brand span,
+.sidebar.collapsed .nav-link span,
+.sidebar.collapsed .arrow-icon,
+.sidebar.collapsed .collapse {
+    display: none !important; /* Ẩn chữ và mũi tên khi thu nhỏ */
+}
+
+.sidebar.collapsed .nav-link {
+    justify-content: center;
+    padding: 0.75rem 0;
+    margin: 0.25rem 0.5rem;
+}
+
+.sidebar.collapsed .nav-link i {
+    margin-right: 0;
+    font-size: 1.2rem;
+}
+
+/* --- BRAND & NAV --- */
+.sidebar-brand {
+    padding: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.nav-link {
+    color: #94a3b8;
+    padding: 0.75rem 1.25rem;
+    margin: 0.2rem 0.8rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.nav-link i {
+    width: 20px;
+    margin-right: 12px;
+    text-align: center;
+}
+
+.nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-link.active {
+    background: var(--primary-color);
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+/* Sub-menu (Menu con) */
+.nav-item .collapse .nav-link {
+    font-size: 0.85rem;
+    padding-left: 2.8rem;
+    color: #94a3b8;
+    margin: 0;
+}
+
+.nav-item .collapse .nav-link:hover {
+    transform: translateX(5px);
+    background: transparent;
+}
+
+/* --- MAIN CONTENT --- */
+.main-content {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    transition: all var(--transition-speed) ease;
+}
+
+.main-content.expanded {
+    margin-left: var(--sidebar-collapsed-width);
+}
+
+.navbar-top {
+    background: #fff;
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.page-content {
+    padding: 1.5rem;
+}
+
+/* --- UTILITIES --- */
+.arrow-icon {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-link[aria-expanded="true"] .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.fs-xs { font-size: 0.65rem; }
+
+.btn-logout {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: none;
+    padding: 0.6rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-logout i { margin-right: 8px; }
+
+.sidebar.collapsed .btn-logout i { margin-right: 0; }
+
+.btn-logout:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+/* Card & Table */
+.card-container {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+}
+
+/* Trạng thái đơn hàng */
+.status-pending { background-color: #fef3c7; color: #92400e; padding: 4px 8px; border-radius: 6px; font-size: 12px; }
+.status-shipping { background-color: #e0f2fe; color: #075985; padding: 4px 8px; border-radius: 6px; font-size: 12px; }
+.status-success { background-color: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 6px; font-size: 12px; }
+.status-cancel { background-color: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 6px; font-size: 12px; }
+
+/* Màu Pastel Subtitle */
+.bg-primary-subtle { background-color: #eef2ff !important; }
+.bg-info-subtle { background-color: #e0f2fe !important; }
+.bg-secondary-subtle { background-color: #f1f5f9 !important; }
+
+/* Icon Category trong bảng */
+.cat-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Nút Action trong bảng */
+.btn-action {
+    background: #fff;
+    border: 1px solid #f1f5f9;
+    transition: all 0.2s;
+}
+.btn-action:hover {
+    background: #f8fafc;
+    transform: scale(1.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* Icon Box trong Form */
+.icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Form floating Custom */
+.form-floating > .form-control:focus,
+.form-floating > .form-select:focus {
+    background-color: #fff !important;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important;
+    border: 1px solid var(--primary-color) !important;
+}

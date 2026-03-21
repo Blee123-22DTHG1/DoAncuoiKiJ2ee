@@ -18,7 +18,7 @@
                     <div class="mx-auto" style="width: 50px; height: 2px; background: #c6a482;"></div>
                 </div>
 
-                <form th:action="@{/products/update}" th:object="${product}" method="post">
+                <form th:action="@{/admin/products/update}" th:object="${product}" method="post">
                     <input type="hidden" th:field="*{id}"/>
 
                     <div class="mb-3">
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                        <a th:href="@{/products}" class="btn btn-light rounded-pill px-4 border">QUAY LẠI</a>
+                        <a th:href="@{/admin/products}" class="btn btn-light rounded-pill px-4 border">QUAY LẠI</a>
                         <button type="submit" class="btn btn-dark rounded-pill px-4" style="background: #5d4037; border: none;">
                             CẬP NHẬT NGAY
                         </button>
