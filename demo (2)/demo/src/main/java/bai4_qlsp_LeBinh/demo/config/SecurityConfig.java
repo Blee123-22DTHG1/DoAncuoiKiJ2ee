@@ -33,15 +33,26 @@ public class SecurityConfig {
                                 "/products/**", "/categories/**",
                                 "/css/**", "/images/**", "/js/**"
                         ).permitAll()
-                        .requestMatchers("/cart/**", "/checkout/**", "/account/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/cart/**", "/checkout/**", "/account/**").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        .successHandler((request, response, authentication) -> {
+                            var authorities = authentication.getAuthorities();
+    
+                            boolean isAdmin = authorities.stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ADMIN"));
+    
+                            if (isAdmin) {
+                                response.sendRedirect("/admin");
+                            } else {
+                                response.sendRedirect("/");
+                            }
+                        })
                         .permitAll()
-                )
+                    )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")

@@ -1,0 +1,185 @@
+<div th:fragment="content" xmlns:th="http://www.thymeleaf.org">
+
+    <div th:fragment="content">
+        <div class="container-fluid p-0">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold text-dark mb-0">Tổng quan hệ thống</h4>
+                <button class="btn btn-primary shadow-sm btn-sm">
+                    <i class="fa-solid fa-download me-2"></i> Xuất báo cáo
+                </button>
+            </div>
+    
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100 p-3 card-stat">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-shape bg-primary-subtle text-primary rounded-3 p-3 me-3">
+                                <i class="fa-solid fa-dollar-sign fs-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-muted mb-1 small fw-medium">Doanh thu tháng</p>
+                                <h4 class="mb-0 fw-bold">128.5M</h4>
+                            </div>
+                        </div>
+                        <div class="mt-3 small">
+                            <span class="text-success fw-bold"><i class="fa-solid fa-arrow-up"></i> 12%</span>
+                            <span class="text-muted ms-2">so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100 p-3 card-stat">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-shape bg-success-subtle text-success rounded-3 p-3 me-3">
+                                <i class="fa-solid fa-cart-shopping fs-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-muted mb-1 small fw-medium">Đơn hàng mới</p>
+                                <h4 class="mb-0 fw-bold">+1,240</h4>
+                            </div>
+                        </div>
+                        <div class="mt-3 small">
+                            <span class="text-success fw-bold"><i class="fa-solid fa-arrow-up"></i> 5.4%</span>
+                            <span class="text-muted ms-2">mục tiêu đạt 80%</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100 p-3 card-stat">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-shape bg-warning-subtle text-warning rounded-3 p-3 me-3">
+                                <i class="fa-solid fa-users fs-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-muted mb-1 small fw-medium">Khách hàng</p>
+                                <h4 class="mb-0 fw-bold">8,549</h4>
+                            </div>
+                        </div>
+                        <div class="mt-3 small">
+                            <span class="text-danger fw-bold"><i class="fa-solid fa-arrow-down"></i> 2%</span>
+                            <span class="text-muted ms-2">tương tác giảm</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <div class="card border-0 shadow-sm h-100 p-3 card-stat">
+                        <div class="d-flex align-items-center">
+                            <div class="icon-shape bg-danger-subtle text-danger rounded-3 p-3 me-3">
+                                <i class="fa-solid fa-box-open fs-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-muted mb-1 small fw-medium">Sản phẩm sắp hết</p>
+                                <h4 class="mb-0 fw-bold text-danger">15</h4>
+                            </div>
+                        </div>
+                        <div class="mt-3 small">
+                            <a href="#" class="text-decoration-none fw-bold">Kiểm tra ngay <i class="fa-solid fa-chevron-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row g-4">
+                <div class="col-12 col-xl-8">
+                    <div class="card border-0 shadow-sm p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mb-0">Biểu đồ tăng trưởng</h5>
+                            <select class="form-select form-select-sm w-auto border-0 bg-light fw-semibold">
+                                <option>Năm 2026</option>
+                                <option>Năm 2025</option>
+                            </select>
+                        </div>
+                        <canvas id="revenueChart" style="min-height: 300px;"></canvas>
+                    </div>
+                </div>
+    
+                <div class="col-12 col-xl-4">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <h5 class="fw-bold mb-4">Hoạt động gần đây</h5>
+                        <div class="timeline-wrapper">
+                            <div class="d-flex mb-4">
+                                <div class="flex-shrink-0">
+                                    <span class="badge bg-primary p-2 rounded-circle mt-1"><i class="fa-solid fa-plus fs-xs"></i></span>
+                                </div>
+                                <div class="ms-3">
+                                    <p class="mb-0 fw-bold small text-dark">Sản phẩm mới được thêm</p>
+                                    <p class="mb-0 text-muted small">iPhone 15 Pro Max 256GB</p>
+                                    <span class="text-muted extra-small">2 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-4">
+                                <div class="flex-shrink-0">
+                                    <span class="badge bg-success p-2 rounded-circle mt-1"><i class="fa-solid fa-check fs-xs"></i></span>
+                                </div>
+                                <div class="ms-3">
+                                    <p class="mb-0 fw-bold small text-dark">Đơn hàng #8845 hoàn thành</p>
+                                    <p class="mb-0 text-muted small">Thanh toán: 15.000.000đ</p>
+                                    <span class="text-muted extra-small">45 phút trước</span>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-4">
+                                <div class="flex-shrink-0">
+                                    <span class="badge bg-warning p-2 rounded-circle mt-1"><i class="fa-solid fa-user-clock fs-xs"></i></span>
+                                </div>
+                                <div class="ms-3">
+                                    <p class="mb-0 fw-bold small text-dark">Cấp quyền ADMIN cho user</p>
+                                    <p class="mb-0 text-muted small text-primary fw-medium">@Binh_Le</p>
+                                    <span class="text-muted extra-small">1 giờ trước</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-light btn-sm w-100 mt-auto fw-bold text-muted">Xem tất cả</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            
+            // Tạo gradient cho đẹp và hiện đại
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(79, 70, 229, 0.2)');
+            gradient.addColorStop(1, 'rgba(79, 70, 229, 0)');
+        
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8'],
+                    datasets: [{
+                        data: [30, 45, 35, 60, 50, 75, 60, 90],
+                        borderColor: '#4f46e5',
+                        borderWidth: 3,
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.4, // Đường cong mềm mại
+                        pointRadius: 0, // Ẩn điểm để nhìn hiện đại hơn
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Quan trọng để fit với height: 280px
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            display: false, // Ẩn trục Y để nhìn tối giản (Modern Style)
+                            beginAtZero: true 
+                        },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { size: 11 } }
+                        }
+                    },
+                    layout: {
+                        padding: { left: -10, bottom: -10 } // Giảm khoảng trắng thừa
+                    }
+                }
+            });
+        </script>
+    </div>
+
+</div>
